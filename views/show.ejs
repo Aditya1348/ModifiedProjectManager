@@ -1,0 +1,85 @@
+<%-include("partials/header") %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top  pt-0 pb-0 pr-0 pl-0">
+  <a class="navbar-brand pr-2  mr-0 colorproject pl-2"><span class="colorproject">ProjectManager</span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+     
+     <li class="nav-item active">
+        <a class="nav-link bg-success pl-2" href="/create/new">Create </a>
+     </li>
+     <li class="nav-item active">
+        <a class="nav-link bg-success pl-2" href="/join">Join </a>
+     </li>
+     <li class="nav-item active">
+        <a class="nav-link bg-success pl-2" href="/secret">YourCreation </a>
+     </li>
+     <li class="nav-item active">
+        <a class="nav-link bg-success pl-2" href="/joinshow/<%=user.username%>">YourJoined</a>
+     </li>
+    </ul>
+    <ul class=" navbar-nav  nav justify-content-end">
+  <li class="nav-item">
+     <a href="#" class="nav-link active bg-success dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="user icon"></i><%=user.username%></a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    
+    <form action="/deleteuser/<%=user.username%>?_method=DELETE" method="POST" >
+      <button class="dropdown-item bg-danger mt-0 mb-0" type="submit">Delete Your Account</button>
+    </form>
+    
+  </div>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link active bg-danger" title="LogOut" href="/logout">LogOut<i class="sign out alternate icon"></i></a>
+  </li>
+ 
+</ul>
+   
+  </div>
+</nav>
+ <h1 class="space"></h1>
+
+
+  <div class="container">
+      <div class="img-thumbnail">
+            <h1 class="display-4"><%=found.title%></h1>
+             <div class="d-flex justify-content-between">
+             <p class="lead"><%=found.describe%></p>
+                  <a href="/show/<%=found._id%>/comment/new" class="btn  btn-success white">Add Your Views</a>
+              </div>
+            
+          
+            <% found.works.forEach(function(foundOne){%>
+              <div class="img-thumbnail">
+             
+              
+                  <p><strong><%=foundOne.username%></strong></p>
+                    <% if(user && foundOne.id == user._id){ %>
+                   <div class="d-flex justify-content-start">
+                 
+                   <a href="/commentedit/<%=foundOne.username%>/<%=found._id%>" class="btn btn-sm btn-info mr-2">Edit</a>
+                 <div>
+                  <form class="formshow" action="/delete/<%=user.username%>/<%=foundOne._id%>/<%=found._id%>?_method=DELETE" method="POST">
+                           <button  type="submit" class="btn btn-sm btn-danger">Del</button>
+                  </form>
+                 </div>
+                  
+              
+               </div>
+                 <%}%>
+                 <p><%=foundOne.comment%></p>
+              </div>
+            <% }) %>
+
+            
+                
+          
+      </div>
+
+      
+  </div>
+
+ <%-include("partials/footer") %>
